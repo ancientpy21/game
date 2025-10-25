@@ -1,3 +1,3 @@
 #this is where the background shape
-WIDTH=1000
+WIDTH=1200
 HEIGHT=700

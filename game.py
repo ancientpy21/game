@@ -1,14 +1,20 @@
 import pygame
+from background import Scrolling
+from back import *
 
 
 # pygame setup
 pygame.init()
 #dimension(set up as your screen )
-screen = pygame.display.set_mode((600, 400))
+screen = pygame.display.set_mode((WIDTH,HEIGHT))
 #clock is for frame rate(slow and fast of the game)
 clock = pygame.time.Clock()
 # flag to make it run the whole time
 running = True
+# make the background
+bg= Scrolling('assets/1 Layer Night sea.png')
+
+bg2=Scrolling('assets/2 Layer River.png')
 
 while running:
     # poll for events
@@ -18,8 +24,10 @@ while running:
             running = False
 
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("purple")
-
+    
+    bg.update()
+    bg.draw(screen)
+    
     # RENDER YOUR GAME HERE
 
     

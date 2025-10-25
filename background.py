@@ -1,23 +1,30 @@
-from back import *
+
 import pygame
-from random import randint
+from back import *
 
-def make_background():
-    # make background
-    the_land_location='assets\Farmer Story Asset and Backgrounds v2\Farmer Story Backgrounds\Mountains\3 layer Mountains.png'
-    the_land= pygame.image.load(the_land_location)
+class Scrolling:
+    def __init__(self, image_path, speed=0.5):
+        self.speed = speed
+        self.scroll_x = 0
 
-    # get the width and height
-    land_width= the_land.get_width()
-    land_height= the_land.get_height()
+        # load image 
+        self.image = pygame.image.load(image_path).convert()
+        self.image = pygame.transform.scale(self.image,(WIDTH,HEIGHT))
+        self.image_width = self.image.get_width()
+        self.image_height = self.image.get_height()
 
-    # make a new surface, background, with the same w,h as screen
-    background= pygame.surface((WIDTH,HEIGHT))
-
-    # loop over the background and place the land on it 
-    for 
-
-
-
-
-# input background
+        # background surface
+        self.background = pygame.Surface((WIDTH, HEIGHT))
+        for x in range(0, WIDTH, self.image_width):
+            for y in range(0, HEIGHT, self.image_height):
+                self.background.blit(self.image, (x, y))
+    # make the scrolling effect
+    def update(self):
+        self.scroll_x -= self.speed
+        if self.scroll_x <= -self.image_width:
+            self.scroll_x = 0
+    # draw it to the screen or blit
+    def draw(self, screen):
+        # draw the scrolling background
+        screen.blit(self.background, (self.scroll_x, 0))
+        screen.blit(self.background, (self.scroll_x + self.image_width, 0))
