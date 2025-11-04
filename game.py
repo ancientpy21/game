@@ -1,5 +1,5 @@
 import pygame
-from background import Scrolling
+from background_file import make_background
 from back import *
 
 
@@ -12,9 +12,7 @@ clock = pygame.time.Clock()
 # flag to make it run the whole time
 running = True
 # make the background
-bg= Scrolling('assets/1 Layer Night sea.png')
-
-bg2=Scrolling('assets/2 Layer River.png')
+background = make_background()
 
 while running:
     # poll for events
@@ -24,9 +22,8 @@ while running:
             running = False
 
     # fill the screen with a color to wipe away anything from last frame
-    
-    bg.update()
-    bg.draw(screen)
+    screen.blit(background,(0,0))
+
     
     # RENDER YOUR GAME HERE
 
