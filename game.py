@@ -1,6 +1,7 @@
 import pygame
 from background_file import make_background
 from back import *
+from players import Player
 
 
 # pygame setup
@@ -13,6 +14,8 @@ clock = pygame.time.Clock()
 running = True
 # make the background
 background = make_background()
+# make a player here
+player = Player()
 
 while running:
     # poll for events
@@ -20,12 +23,17 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+    #pass the event to our player
+    player.update_event()
 
+    # update
+    player.update()
     # fill the screen with a color to wipe away anything from last frame
     screen.blit(background,(0,0))
 
-    
     # RENDER YOUR GAME HERE
+    player.draw(screen)
+
 
     
     # flip() the display to put your work on screen
