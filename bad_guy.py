@@ -9,9 +9,10 @@ class Badguy(pygame.sprite.Sprite):
         self.vx= randint(-3,-1)
         self.vy= 0
         self.x=WIDTH + 100
-        self.y=HEIGHT*(3/4)
+        self.y=HEIGHT*(6/8)
         self.image= pygame.image.load('assets/asset/goblin.png').convert_alpha()
         self.image= pygame.transform.flip(self.image,1,0)
+        self.image= pygame.transform.scale(self.image,(80,80))
         #self.target=player
         self.rect=self.image.get_rect()
         #self.speed= randint(1,3)

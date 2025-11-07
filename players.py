@@ -24,8 +24,10 @@ class Player(pygame.sprite.Sprite):
         self.y += self.vy
         # update rect
         self.rect.center = (self.x,self.y)
+    # def collide(self):
+        # collision related with ratio
+        # self.collision= collision
 
-        
     def update_event(self):
         keys = pygame.key.get_pressed()
 

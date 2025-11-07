@@ -3,6 +3,7 @@ from background_file import make_background
 from back import *
 from players import Player
 from bad_guy import Badguy
+from player_health import Heathbar
 
 
 # pygame setup
@@ -18,6 +19,7 @@ background = make_background()
 # make a player here
 player = Player()
 badguy = Badguy()
+health = Heathbar(50,25,100,25,100)
 
 
 while running:
@@ -40,6 +42,7 @@ while running:
     # RENDER YOUR GAME HERE
     player.draw(screen)
     badguy.draw(screen)
+    health.update(screen)
 
 
     
