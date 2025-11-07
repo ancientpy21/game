@@ -2,6 +2,7 @@ import pygame
 from background_file import make_background
 from back import *
 from players import Player
+from bad_guy import Badguy
 
 
 # pygame setup
@@ -16,6 +17,8 @@ running = True
 background = make_background()
 # make a player here
 player = Player()
+badguy = Badguy()
+
 
 while running:
     # poll for events
@@ -24,15 +27,19 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     #pass the event to our player
+    
     player.update_event()
 
     # update
     player.update()
+    badguy.update()
+    
     # fill the screen with a color to wipe away anything from last frame
     screen.blit(background,(0,0))
 
     # RENDER YOUR GAME HERE
     player.draw(screen)
+    badguy.draw(screen)
 
 
     
