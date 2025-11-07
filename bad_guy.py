@@ -10,6 +10,7 @@ class Badguy(pygame.sprite.Sprite):
         self.vy= 0
         self.x=WIDTH + 100
         self.y=HEIGHT*(6/8)
+        self.assets= ['assets/asset/goblin.png','assets/asset/result_0.png',]
         self.image= pygame.image.load('assets/asset/goblin.png').convert_alpha()
         self.image= pygame.transform.flip(self.image,1,0)
         self.image= pygame.transform.scale(self.image,(80,80))
@@ -24,6 +25,9 @@ class Badguy(pygame.sprite.Sprite):
 
         # update the rect
         self.rect.center = (self.x,self.y)
+        # update position
+        if self.rect.x==0:
+            self.x=WIDTH+100
 
         # update speed
 

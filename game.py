@@ -19,7 +19,7 @@ background = make_background()
 # make a player here
 player = Player()
 badguy = Badguy()
-health = Heathbar(50,25,100,25,100)
+health = Heathbar(50,25,150,25,100)
 
 
 while running:
