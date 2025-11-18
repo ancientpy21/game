@@ -14,11 +14,11 @@ class Heathbar():
     
     
     # make surface
-    def update(self, life):
+    def update(self, screen,hp):
         # make a ratio of red and green
-        ratio = self.hp/self.max_hp
-        pygame.draw.rect(life, 'red', (self.x,self.y,self.w,self.h))
-        pygame.draw.rect(life, 'green', (self.x,self.y,self.w*ratio,self.h))
+        ratio = hp/self.max_hp
+        pygame.draw.rect(screen, 'red', (self.x,self.y,self.w,self.h))
+        pygame.draw.rect(screen, 'green', (self.x,self.y,self.w*ratio,self.h))
 
 
 

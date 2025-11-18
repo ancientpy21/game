@@ -1,34 +1,35 @@
 import pygame
 from back import *
-GRAVITY = 1             # Rate of downward acceleration
+GRAVITY = 5            # Rate of downward acceleration
 JUMP_STRENGTH = 20       # Initial upward velocity for a jump
 FLOOR_Y = HEIGHT*(6/8)
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self,badguy_group,background,x=100,y=100):
+    def __init__(self,badguy_group,background,x=100,y=FLOOR_Y):
         #init the sprite
-        super.__init__(self)
+        pygame.sprite.Sprite.__init__(self)
         # set position and speed
         self.x = x
         self.y = y
-        self.badguy_group = badguy_group
-        self.background=background
+        
         self.vx = 0
         self.vy = JUMP_STRENGTH
-        self.g= 1
+        self.badguy_group = badguy_group
+        self.background=background
+        
         self.jumping = False
         self.on_ground=False
+        self.hp=100
         # upload file
-        self.standing = pygame.image.load('assets/asset/white.png').convert_alpha()
-        self.jump== pygame.image.load('assets/asset/jump.png').convert_alpha()
-        # resize if needed
-        self.standing =pygame.transform.scale(self.standing,(60,60))
-        self.jump=pygame.transform.scale(self.jump,(60,60))
-
-        self.image=self.standing
+        self.image = pygame.image.load('assets/asset/white.png').convert_alpha()
         
-        self.health_bar = {'ratio': 100}
+        # resize if needed
+        self.image =pygame.transform.scale(self.image,(100,100))
+        self.rect = self.image.get_rect(center=(self.x, self.y))
+
+        
+        
 
     def check_boundaries(self):
 
@@ -36,33 +37,34 @@ class Player(pygame.sprite.Sprite):
         if self.rect.top<0:
             self.vy = -self.vy # bounce
 
-        #print(self.background.get_at(self.rect.bottomright))
-        front_color = self.background.get_at(self.rect.bottomright)
-        if front_color[2]<200: # if not so blue
-            self.vy=0
-            self.vx =0
-            self.rect.bottom = self.rect.bottom -10
+        if self.rect.bottom >= FLOOR_Y:
+            self.rect.bottom = FLOOR_Y
+            self.vy = 0
+            self.on_ground = True
+        else:
+            self.on_ground = False
 
 
 
     def update(self):
-       self.x+=self.vx
-       self.y+=self.vy
+        self.x+=self.vx
+        self.y+=self.vy
 
-       #update the rect
-       self.rect.center=(self.x,self.y)
+        
         #check boundaries
-       self.check_boundaries()
+        self.check_boundaries()
 
-       # collision
-       colliding=pygame.sprite.spritecollide(self,self.badguy_group,0)
+         # collision
+        colliding=pygame.sprite.spritecollide(self,self.badguy_group,0)
 
-       if colliding:
-           self.health_bar['ratio']-=20
+        if colliding:
+            self.hp-=20
            
-           for b in colliding:
-               b.x= WIDTH+50
-               b.y=FLOOR_Y
+            for b in colliding:
+                b.x= WIDTH+50
+                b.y=FLOOR_Y
+        #sync new position
+        self.rect.center = (self.x, self.y)
 
                    
 

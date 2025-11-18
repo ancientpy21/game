@@ -5,13 +5,13 @@ from random import randint, choice
 
 class Badguy(pygame.sprite.Sprite):
     def __init__(self,player):
-        super.__init__()
+        pygame.sprite.Sprite.__init__(self)
         #start
         self.x=WIDTH+100
         self.y=HEIGHT*6/8
         
         #move
-        self.vx= -5
+        self.vx= -3
         self.vy= 0
         #assets
         self.assets= ['assets/asset/goblin.png',
