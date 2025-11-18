@@ -5,6 +5,7 @@ from players import Player
 from bad_guy import Badguy
 from player_health import Heathbar
 from random import randint
+from main_menu import MainText
 
 
 # pygame setup
@@ -17,6 +18,7 @@ clock = pygame.time.Clock()
 running = True
 # make the background
 background = make_background()
+main_text= MainText()
 badguy_group= pygame.sprite.Group()
 # make a player here
 player = Player(badguy_group,background)
@@ -34,20 +36,23 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     #pass the event to our player
-    
+    main_text.update()
     player.update_event()
 
     # update
+    
     player.update()
     badguy_group.update()
-    
+    main_text.update_game(player.hp)
     # fill the screen with a color to wipe away anything from last frame
     screen.blit(background,(0,0))
 
     # RENDER YOUR GAME HERE
+    main_text.draw_title(screen)
     player.draw(screen)
     badguy_group.draw(screen)
     health.update(screen,player.hp)
+    main_text.draw_game_over(screen)
 
 
     
