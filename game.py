@@ -4,6 +4,7 @@ from back import *
 from players import Player
 from bad_guy import Badguy
 from player_health import Heathbar
+from random import randint
 
 
 # pygame setup
@@ -17,11 +18,17 @@ running = True
 # make the background
 background = make_background()
 # make a player here
-player = Player()
-badguy = Badguy()
+player = Player(badguy_group,background)
+
+badguy_group= pygame.sprite.Group()
+for i in range(3):
+    badguy_group.add(Badguy(player))
+
+
+
 health = Heathbar(50,25,150,25,100)
 
-
+screen_num=0
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
