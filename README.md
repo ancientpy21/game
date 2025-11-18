@@ -4,7 +4,7 @@
 
 ### Screenshot of current game:
 ![screenshot](https://github.com/ancientpy21/game/blob/main/title%20and%20game%20over.png?raw=true)
-![screenshot]()
+![screenshot](https://github.com/ancientpy21/game/blob/main/game%20over.png?raw=true)
 
 - [x] make gravity
 - [x] make collision
