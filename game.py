@@ -17,14 +17,12 @@ clock = pygame.time.Clock()
 running = True
 # make the background
 background = make_background()
+badguy_group= pygame.sprite.Group()
 # make a player here
 player = Player(badguy_group,background)
 
-badguy_group= pygame.sprite.Group()
 for i in range(3):
     badguy_group.add(Badguy(player))
-
-
 
 health = Heathbar(50,25,150,25,100)
 
@@ -41,15 +39,15 @@ while running:
 
     # update
     player.update()
-    badguy.update()
+    badguy_group.update()
     
     # fill the screen with a color to wipe away anything from last frame
     screen.blit(background,(0,0))
 
     # RENDER YOUR GAME HERE
     player.draw(screen)
-    badguy.draw(screen)
-    health.update(screen)
+    badguy_group.draw(screen)
+    health.update(screen,player.hp)
 
 
     
