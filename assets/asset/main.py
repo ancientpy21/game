@@ -18,7 +18,7 @@ class Game:
         self.display_surface =pygame.display.set_mode((WIDTH,HEIGHT))
         pygame.display.set_caption('Platformer')
         # load the map here
-        self.tmx_map ={0: load_pygame(join("game", "assets", "asset", "level", "basic.tmx"))}
+        self.tmx_map ={0: load_pygame(join("level", "basic.tmx"))}
 
         self.current_stage= Level(self.tmx_map[0])
 
