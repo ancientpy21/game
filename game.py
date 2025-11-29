@@ -1,5 +1,6 @@
+
 import pygame
-from background_file import make_background
+from background import load_background,draw_background
 from back import *
 from players import Player
 from bad_guy import Badguy
@@ -13,22 +14,22 @@ pygame.init()
 #dimension(set up as your screen )
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
 # set caption
-pygame.display.set_caption('monster adventure')
+pygame.display.set_caption('Platformer')
 #clock is for frame rate(slow and fast of the game)
 clock = pygame.time.Clock()
 # flag to make it run the whole time
 running = True
 # make the background
-background = make_background()
-main_text= MainText()
-badguy_group= pygame.sprite.Group()
+bg =load_background()
+#main_text= MainText()
+#badguy_group= pygame.sprite.Group()
 # make a player here
-player = Player(badguy_group,background)
+#player = Player(badguy_group,badguy_group)
 
-for i in range(3):
-    badguy_group.add(Badguy(player))
+#for i in range(3):
+   # badguy_group.add(Badguy(player))
 
-health = Heathbar(50,25,150,25,100)
+#health = Heathbar(50,25,150,25,100)
 
 screen_num=0
 while running:
@@ -38,23 +39,24 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     #pass the event to our player
-    main_text.update()
-    player.update_event()
+    #main_text.update()
+    #player.update_event()
+    draw_background(screen,bg)
 
     # update
     
-    player.update()
-    badguy_group.update()
-    main_text.update_game(player.hp)
+   # player.update()
+    #badguy_group.update()
+    #main_text.update_game(player.hp)
     # fill the screen with a color to wipe away anything from last frame
-    screen.blit(background,(0,0))
+    #screen.blit(background,(0,0))
 
-    # RENDER YOUR GAME HERE
-    main_text.draw_title(screen)
-    player.draw(screen)
-    badguy_group.draw(screen)
-    health.update(screen,player.hp)
-    main_text.draw_game_over(screen)
+    ## RENDER YOUR GAME HERE
+    #main_text.draw_title(screen)
+    #player.draw(screen)
+    #badguy_group.draw(screen)
+    #health.update(screen,player.hp)
+    #main_text.draw_game_over(screen)
 
 
     
