@@ -3,7 +3,7 @@ from back import *
 
 def make_background():
     #make a terrain background
-    terrain_loc='assets/asset/terrain.png'
+    terrain_loc='game\assets\asset\New folder\terrain.png'
     terrain= pygame.image.load(terrain_loc).convert_alpha()
     terrain= pygame.transform.scale(terrain,(WIDTH,HEIGHT))
 

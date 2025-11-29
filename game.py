@@ -13,7 +13,7 @@ pygame.init()
 #dimension(set up as your screen )
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
 # set caption
-pygame.dysplay.set_caption('monster adventure')
+pygame.display.set_caption('monster adventure')
 #clock is for frame rate(slow and fast of the game)
 clock = pygame.time.Clock()
 # flag to make it run the whole time
