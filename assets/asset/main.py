@@ -6,7 +6,7 @@ from level import Level
 from pytmx.util_pygame import load_pygame
 # to simplify the loading the file path
 from os.path import join
-#from pygame.math import Vector2 as vector
+from pygame.math import Vector2 as vector
 # using class to make clearer 
 
 
@@ -18,7 +18,7 @@ class Game:
         self.display_surface =pygame.display.set_mode((WIDTH,HEIGHT))
         pygame.display.set_caption('Platformer')
         # load the map here
-        self.tmx_map ={0: load_pygame(join('..','game','assets','asset','level','0.tmx'))}
+        self.tmx_map ={0: load_pygame(join("game", "assets", "asset", "level", "basic.tmx"))}
 
         self.current_stage= Level(self.tmx_map[0])
 
@@ -32,7 +32,7 @@ class Game:
                     pygame.quit()
                     sys.exit()
         
-            self.current_stage.run()
+            self.current_stage.draw()
             self.display_surface.fill('black')
             pygame.display.update()
 
