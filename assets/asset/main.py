@@ -1,6 +1,11 @@
 # import here
 import pygame, sys
 from config import *
+from level import Level
+# to import our tile from the tiled app
+from pytmx.util_pygame import load_pygame
+# to simplify the loading the file path
+from os.path import join
 #from pygame.math import Vector2 as vector
 # using class to make clearer 
 
@@ -12,21 +17,23 @@ class Game:
         # Setup the display surface using constants from config.py
         self.display_surface =pygame.display.set_mode((WIDTH,HEIGHT))
         pygame.display.set_caption('Platformer')
+        # load the map here
+        self.tmx_map ={0: load_pygame(join('..','game','assets','asset','level','0.tmx'))}
+
+        self.current_stage= Level(self.tmx_map[0])
 
     # here for the running event to display
     def run(self):
-        # make a smoother frame rate
-        dt = self.clock.tick(FPS) 
+       
         # loop the game
         while True:
-
-            self.clock = pygame.time.Clock()
             for event in pygame.event.get():
-                if pygame.type == pygame.QUIT:
+                if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
         
-            self.display_surface.fill('white')
+            self.current_stage.run()
+            self.display_surface.fill('black')
             pygame.display.update()
 
 # create instance to execute Game
