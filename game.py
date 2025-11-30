@@ -24,7 +24,7 @@ bg =load_background()
 #main_text= MainText()
 #badguy_group= pygame.sprite.Group()
 # make a player here
-#player = Player(badguy_group,badguy_group)
+player = Player(200, 300)
 
 #for i in range(3):
    # badguy_group.add(Badguy(player))
@@ -44,7 +44,8 @@ while running:
     draw_background(screen,bg)
 
     # update
-    
+    # Update logic
+    player.update()
    # player.update()
     #badguy_group.update()
     #main_text.update_game(player.hp)
@@ -53,7 +54,7 @@ while running:
 
     ## RENDER YOUR GAME HERE
     #main_text.draw_title(screen)
-    #player.draw(screen)
+    player.draw(screen)
     #badguy_group.draw(screen)
     #health.update(screen,player.hp)
     #main_text.draw_game_over(screen)
