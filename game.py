@@ -1,7 +1,10 @@
 
 import pygame
+import sys
 from background import load_background,draw_background
 from config import *
+from players import Player
+
 
 # pygame setup
 pygame.init()
@@ -17,7 +20,7 @@ running = True
 
 # make the background
 bg =load_background()
-
+player = Player((WIDTH / 2, HEIGHT - 50), True) 
 
 screen_num=0
 while running:
@@ -27,8 +30,14 @@ while running:
         if event.type == pygame.QUIT:
             running = False
   
-    draw_background(screen,bg)
+    player.update(level=None) 
 
+    
+    
+    
+    
+    draw_background(screen,bg)
+    player.draw(level=None)
  
 
 
@@ -39,3 +48,4 @@ while running:
     clock.tick(60)  # limits FPS to 60
 
 pygame.quit()
+sys.exit()
