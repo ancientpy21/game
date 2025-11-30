@@ -1,9 +1,10 @@
 
 import pygame
 import sys
-from background import load_background,draw_background
+from background import Background
 from config import *
 from players import Player
+
 
 
 # pygame setup
@@ -17,10 +18,17 @@ clock = pygame.time.Clock()
 # flag to make it run the whole time
 running = True
 
+# import level
+#level = Level(screen)
 
 # make the background
-bg =load_background()
-player = Player((WIDTH / 2, HEIGHT - 50), True) 
+background = Background()
+player = Player((100,100),True)  
+# starting position
+
+
+# LEVEL 
+#level = None   # or use load_level()
 
 screen_num=0
 while running:
@@ -30,16 +38,17 @@ while running:
         if event.type == pygame.QUIT:
             running = False
   
-    player.update(level=None) 
+
 
     
     
     
     
-    draw_background(screen,bg)
-    player.draw(level=None)
+    background.draw(screen)
+    player.draw(screen)
  
 
+    player.update()
 
     
     # flip() the display to put your work on screen

@@ -1,121 +1,77 @@
 import pygame
 from config import *
-from load_sprite import load_sprite_sheet
-GRAVITY = 1            # Rate of downward acceleration
-JUMP_STRENGTH = 16      # Initial upward velocity for a jump
+from MANAGE import SpriteSheet
 
+idleSprites = [
+    (0, 0, 32, 32),
+    (32, 0, 32, 32),
+    (64, 0, 32, 32),
+    (96, 0, 32, 32),
+    (128, 0, 32, 32),
+    (160, 0, 32, 32),
+    (192, 0, 32, 32),
+    (224, 0, 32, 32)
+]
+jumpSprites = [
+    (0, 0, 32, 32)
+]
+fallSprites = [
+    (0, 0, 32, 32)
+]
 
+class Player():
+    def __init__(self,position, facing):
+        #load spritesheet
+        idleSpritesSheet = SpriteSheet(SPRITESHEET_PATH + 'Main Characters/Mask Dude/Idle (32x32).png', idleSprites)
+        jumpSpritesSheet = SpriteSheet(SPRITESHEET_PATH + 'Main Characters/Mask Dude/Jump (32x32).png', jumpSprites)
+        fallSpritesSheet = SpriteSheet(SPRITESHEET_PATH + 'Main Characters/Mask Dude/Fall (32x32).png', fallSprites)
 
-# Player idle file
-IDLE_RIGHT = load_sprite_sheet("assets/asset/game file/Main Characters/Mask Dude/Idle (32x32).png", 32, 32)
-RUN_RIGHT  = load_sprite_sheet("assets/asset/game file/Main Characters/Mask Dude/Run (32x32).png", 32, 32)
-JUMP_RIGHT = load_sprite_sheet("assets/asset/game file/Main Characters/Mask Dude/Jump (32x32).png", 32, 32)
-FALL_RIGHT = load_sprite_sheet("assets/asset/game file/Main Characters/Mask Dude/Fall (32x32).png", 32, 32)
+        #make simpler by creating dictionary
+        self.spriteSheets ={
+            'IDLE': idleSpritesSheet,
+            'JUMP': jumpSpritesSheet,
+            'FALL': fallSpritesSheet
+        }
+        #initialize variable in sprite animation
+        self.facing = facing
+        self.currentstate = 'IDLE'
+        self.animation =0
+        self.x,self.y=position
+        self.speed =  PLAYERIDLE_SPEED
 
-# Flip them for left
-IDLE_LEFT = [pygame.transform.flip(img, True, False) for img in IDLE_RIGHT]
-RUN_LEFT  = [pygame.transform.flip(img, True, False) for img in RUN_RIGHT]
-JUMP_LEFT = [pygame.transform.flip(img, True, False) for img in JUMP_RIGHT]
-FALL_LEFT = [pygame.transform.flip(img, True, False) for img in FALL_RIGHT]
-
-class Player(pygame.sprite.Sprite):
-    ANIMATION_DELAY = 5
-
-  
-    def __init__(self, x, y):
-        super().__init__()
-
-        self.rect = pygame.Rect(x, y, 32, 32)
-        self.x, self.y = x, y
-        self.vx, self.vy = 0, 0
-        self.direction = "right"
-        self.animation_count = 0
-        self.on_ground = False
-        self.jumping = False
-
-        # first sprite
-        self.sprite = self.IDLE_RIGHT[0]
-
-
-    # -------------------- MOVEMENT ----------------------
-
-    def jump(self):
-        if self.on_ground:
-            self.vy = -JUMP_STRENGTH
-            self.jumping = True
-
-    def apply_gravity(self):
-        self.vy += GRAVITY
-        if self.vy > 20:
-            self.vy = 20
-
-    def update_physics(self):
-        self.x += self.vx
-        self.y += self.vy
-        self.rect.topleft = (self.x, self.y)
-
-        # ground check
-        if self.rect.bottom >= FLOOR_Y:
-            self.rect.bottom = FLOOR_Y
-            self.y = self.rect.y
-            self.vy = 0
-            self.on_ground = True
-            self.jumping = False
-        else:
-            self.on_ground = False
-
-
-    # -------------------- INPUT ----------------------
-
-    def handle_input(self):
-        keys = pygame.key.get_pressed()
-        self.vx = 0
-
-        if keys[pygame.K_LEFT]:
-            self.vx = -4
-            self.direction = "left"
-        if keys[pygame.K_RIGHT]:
-            self.vx = 4
-            self.direction = "right"
-        if keys[pygame.K_UP]:
-            self.jump()
-
-
-    # -------------------- ANIMATION ----------------------
-
-    def update_animation(self):
-        if self.jumping and self.vy < 0:
-            action = "jump"
-        elif self.vy > 5:
-            action = "fall"
-        elif self.vx != 0:
-            action = "run"
-        else:
-            action = "idle"
-
-        # pick correct sprite list
-        if action == "idle":
-            sprites = self.IDLE_RIGHT if self.direction == "right" else self.IDLE_LEFT
-        elif action == "run":
-            sprites = self.RUN_RIGHT if self.direction == "right" else self.RUN_LEFT
-        elif action == "jump":
-            sprites = self.JUMP_RIGHT if self.direction == "right" else self.JUMP_LEFT
-        else:
-            sprites = self.FALL_RIGHT if self.direction == "right" else self.FALL_LEFT
-
-        # animate frames
-        index = (self.animation_count // self.ANIMATION_DELAY) % len(sprites)
-        self.sprite = sprites[index]
-        self.animation_count += 1
-
-
-    # -------------------- UPDATE + DRAW ----------------------
+        # Create a default rect to avoid crashes before update()
+        self.currentanimation = self.spriteSheets["IDLE"].getSprites(flipped=not facing)
+        self.image = self.currentanimation[0]
+        self.rect = self.image.get_rect(topleft=(self.x, self.y))
 
     def update(self):
-        self.handle_input()
-        self.apply_gravity()
-        self.update_physics()
-        self.update_animation()
+        self.selectanimation()
 
-    def draw(self, screen, offset_x=0):
-        screen.blit(self.sprite, (self.rect.x - offset_x, self.rect.y))
+        # update frame
+        self.image = self.currentanimation[int(self.animation)]
+        self.rect.topleft = (self.x, self.y)
+
+        # increase animation timer
+        self.animation += self.speed
+
+        # loop animation
+        if self.animation >= len(self.currentanimation):
+            self.animation = 0
+
+    #DRAW
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+    # CHOSE ANIMATION
+    def selectanimation(self):
+        # select correct speed
+        if self.currentstate == "IDLE":
+            self.speed = PLAYERIDLE_SPEED
+        else:
+            self.speed = PLAYER_SPEED
+
+        # load correct sprite sheet
+        sheet = self.spriteSheets[self.currentstate]
+
+        # update frames (flipped if facing left)
+        self.currentanimation = sheet.getSprites(flipped=not self.facing)

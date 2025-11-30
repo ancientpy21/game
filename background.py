@@ -1,32 +1,18 @@
 import pygame
 from config import *
 # Load a single tile image from file
-def load_tile(path):
-    tile = pygame.image.load(path).convert()
-    return tile
+class Background:
+    def __init__(self):
+        self.tile = pygame.image.load("assets/asset/game file/Background/Blue.png").convert_alpha()
+        self.tile_w, self.tile_h = self.tile.get_size()
 
+        # Pre-render background to a single surface
+        self.bg_surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
 
-# Create a full background made from many small tiles
-def load_background():
-    # Load the small tile image
-    tile = load_tile('assets/asset/game file/Background/Blue.png')
+        for y in range(0, HEIGHT, self.tile_h):
+            for x in range(0, WIDTH, self.tile_w):
+                self.bg_surface.blit(self.tile, (x, y))
 
-    tile_w = tile.get_width()
-    tile_h = tile.get_height()
-
-    # Create surface the size of the screen
-    bg = pygame.Surface((WIDTH, HEIGHT))
-
-    # Tile it across the screen
-    for y in range(0, HEIGHT, tile_h):
-        for x in range(0, WIDTH, tile_w):
-            bg.blit(tile, (x, y))
-
-    return bg
-
-
-def draw_background(screen, bg):
-    screen.blit(bg, (0,0))
-
-
+    def draw(self, screen):
+        screen.blit(self.bg_surface, (0, 0))
 
