@@ -1,12 +1,10 @@
 
 import pygame
 from background import load_background,draw_background
-from back import *
-from players import Player
-from bad_guy import Badguy
-from player_health import Heathbar
-from random import randint
-from main_menu import MainText
+from config import *
+
+from tile_class import load_level
+
 
 
 # pygame setup
@@ -19,17 +17,12 @@ pygame.display.set_caption('Platformer')
 clock = pygame.time.Clock()
 # flag to make it run the whole time
 running = True
+
+
 # make the background
 bg =load_background()
-#main_text= MainText()
-#badguy_group= pygame.sprite.Group()
-# make a player here
-player = Player(200, 300)
+tiles = load_level()
 
-#for i in range(3):
-   # badguy_group.add(Badguy(player))
-
-#health = Heathbar(50,25,150,25,100)
 
 screen_num=0
 while running:
@@ -38,26 +31,11 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    #pass the event to our player
-    #main_text.update()
-    #player.update_event()
+  
     draw_background(screen,bg)
+    tiles.draw(screen)
 
-    # update
-    # Update logic
-    player.update()
-   # player.update()
-    #badguy_group.update()
-    #main_text.update_game(player.hp)
-    # fill the screen with a color to wipe away anything from last frame
-    #screen.blit(background,(0,0))
-
-    ## RENDER YOUR GAME HERE
-    #main_text.draw_title(screen)
-    player.draw(screen)
-    #badguy_group.draw(screen)
-    #health.update(screen,player.hp)
-    #main_text.draw_game_over(screen)
+ 
 
 
     

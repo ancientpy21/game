@@ -1,8 +1,8 @@
 import pygame
-from back import *
+from config import *
 
 def load_sprite_sheet(path,width,height):
-    sheet = pygame.iamge.load(path).convert_alpha()
+    sheet = pygame.image.load(path).convert_alpha()
     sprites =[]
 
     frames = sheet.get_width() // width

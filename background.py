@@ -1,5 +1,5 @@
 import pygame
-from back import *
+from config import *
 # Load a single tile image from file
 def load_tile(path):
     tile = pygame.image.load(path).convert()
