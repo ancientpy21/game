@@ -11,7 +11,7 @@ def load_sprite_sheet(path,width,height):
 
         rect = pygame.Rect(i* width,0,width,height)
         frame.blit(sheet,(0,0), rect)
-        sprites.sppend(frame)
+        sprites.append(frame)
 
     return sprites
 

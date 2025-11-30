@@ -3,10 +3,6 @@ import pygame
 from background import load_background,draw_background
 from config import *
 
-from tile_class import load_level
-
-
-
 # pygame setup
 pygame.init()
 #dimension(set up as your screen )
@@ -21,7 +17,6 @@ running = True
 
 # make the background
 bg =load_background()
-tiles = load_level()
 
 
 screen_num=0
@@ -33,7 +28,6 @@ while running:
             running = False
   
     draw_background(screen,bg)
-    tiles.draw(screen)
 
  
 
