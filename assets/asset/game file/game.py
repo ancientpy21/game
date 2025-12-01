@@ -6,7 +6,7 @@ from config import *
 from players import Player
 from main_menu import StartScreen
 from score import Score
-
+from enemies import Enemy
 
 # pygame setup
 pygame.init()
@@ -29,7 +29,9 @@ score =Score()
 
 
 player = Player(100, FLOOR_Y - 50)
-
+enemies = pygame.sprite.Group()
+enemies.add((Enemy()))
+enemies.add(Enemy(speed=3))
 # starting position
 
 
@@ -52,6 +54,8 @@ while running:
    
     player.draw(screen)
     player.update()
+    enemies.update()
+    enemies.draw(screen)
  
     score.draw(screen)
     # flip() the display to put your work on screen
