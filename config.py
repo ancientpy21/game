@@ -1,5 +1,5 @@
 
-SPRITESHEET_PATH = 'assets/asset/game file'
+SPRITESHEET_PATH = 'assets/asset/game file/'
 
 #this is where the background shape
 WIDTH = 1280
@@ -20,4 +20,4 @@ SPEED = 3
 
 # Terrain & blocks
 BLOCK_SIZE = 50
-TILE = 32
+TILE = 16

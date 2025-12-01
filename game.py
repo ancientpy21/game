@@ -4,7 +4,7 @@ import sys
 from background import Background
 from config import *
 from players import Player
-
+from levels import Level
 
 
 # pygame setup
@@ -19,11 +19,12 @@ clock = pygame.time.Clock()
 running = True
 
 # import level
-#level = Level(screen)
 
 # make the background
 background = Background()
-player = Player((100,100),True)  
+level = Level(screen)
+player = Player((200,200),True)  
+
 # starting position
 
 
@@ -43,8 +44,8 @@ while running:
     
     
     
-    
     background.draw(screen)
+    level.run(player)
     player.draw(screen)
  
 
