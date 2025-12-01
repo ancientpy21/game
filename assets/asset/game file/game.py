@@ -7,6 +7,7 @@ from players import Player
 from main_menu import StartScreen
 from score import Score
 from enemies import Enemy
+from game_over import GameOver
 
 # pygame setup
 pygame.init()
@@ -19,7 +20,7 @@ clock = pygame.time.Clock()
 # flag to make it run the whole time
 running = True
 
-# import screen
+# MAIN MENU
 start_screen = StartScreen(screen)
 start_screen.run()
 
@@ -27,18 +28,13 @@ start_screen.run()
 bg = Background(image_path='abc.jpg', width=WIDTH, height=HEIGHT, floor_y=FLOOR_Y, floor_color=(0,0,0))
 score =Score()
 
-
+# GAME OBJECT
 player = Player(100, FLOOR_Y - 50)
 enemies = pygame.sprite.Group()
-enemies.add((Enemy()))
-enemies.add(Enemy(speed=3))
-# starting position
+enemies.add(Enemy())
+enemies.add(Enemy(speed=2))
 
-
-# LEVEL 
-#level = None   # or use load_level()
-
-screen_num=0
+running = True
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -46,18 +42,22 @@ while running:
         if event.type == pygame.QUIT:
             running = False
   
+    if pygame.sprite.spritecollide(player, enemies, False):
+        gameover_sc= GameOver(screen)
+        gameover_sc.run(score.value)
+        running=False
+        
 
-    
-    score.update()
+
     bg.draw(screen)
- 
-   
     player.draw(screen)
+    enemies.draw(screen)
+    score.draw(screen)
+
+
+    score.update()
     player.update()
     enemies.update()
-    enemies.draw(screen)
- 
-    score.draw(screen)
     # flip() the display to put your work on screen
     pygame.display.flip()
 
