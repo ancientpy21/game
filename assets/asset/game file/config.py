@@ -4,13 +4,13 @@ SPRITESHEET_PATH = 'assets/asset/game file/'
 #this is where the background shape
 WIDTH = 700
 HEIGHT = 400
-FLOOR_Y=(6/8)*HEIGHT
+FLOOR_Y=HEIGHT*6/8
 pos_x = 100
 
 # frames
 FPS = 60
 # Player movement
-GRAVITY = 0.8
+GRAVITY = 0.5
 
 JUMP_FORCE = 15
 DELAY =5 

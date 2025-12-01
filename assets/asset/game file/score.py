@@ -8,7 +8,7 @@ class Score:
         self.color = color
         self.x = x
         self.y = y
-        self.increment = 0.1
+        self.increment = 0.1 # make it faster/ slower here
         self.last_update = pygame.time.get_ticks()
 
     def update(self):
