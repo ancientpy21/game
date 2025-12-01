@@ -1,8 +1,9 @@
 import pygame
 from sys import exit
+from config import *
 
 class StartScreen:
-    def init(self, screen, width, height, button_text="START GAME"):
+    def __init__(self, screen, width=WIDTH, height=HEIGHT, button_text="START GAME"):
         self.screen = screen
         self.width = width
         self.height = height
@@ -23,7 +24,7 @@ class StartScreen:
         self.button_rect = self.button_text.get_rect(center=(self.width // 2, self.height // 2))
 
     def run(self):
-        """Displays the start screen until the button is clicked."""
+        
         running = True
         while running:
             self.screen.fill(self.BLACK)

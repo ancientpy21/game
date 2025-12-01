@@ -5,7 +5,7 @@ from background import Background
 from config import *
 from players import Player
 from main_menu import StartScreen
-
+from score import Score
 
 
 # pygame setup
@@ -20,13 +20,15 @@ clock = pygame.time.Clock()
 running = True
 
 # import screen
-start_screen = StartScreen(screen, WIDTH, HEIGHT)
+start_screen = StartScreen(screen)
 start_screen.run()
 
 # make the background
-bg = Background(image_path='abc.jpg',width=WIDTH,height=HEIGHT,floor_y=WIDTH,floor_color='black')
+bg = Background(image_path='abc.jpg', width=WIDTH, height=HEIGHT, floor_y=FLOOR_Y, floor_color=(0,0,0))
+score =Score()
 
-#player = Player(pos_x,floor_y)  
+
+player = Player(100, FLOOR_Y - 50)
 
 # starting position
 
@@ -44,16 +46,14 @@ while running:
   
 
     
-    
+    score.update()
     bg.draw(screen)
  
-    #player.draw(screen)
+   
+    player.draw(screen)
+    player.update()
  
-
-    
-    
-
-    
+    score.draw(screen)
     # flip() the display to put your work on screen
     pygame.display.flip()
 

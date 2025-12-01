@@ -4,7 +4,7 @@ SPRITESHEET_PATH = 'assets/asset/game file/'
 #this is where the background shape
 WIDTH = 700
 HEIGHT = 400
-floor_y=(6/8)*HEIGHT
+FLOOR_Y=(6/8)*HEIGHT
 pos_x = 100
 
 # frames

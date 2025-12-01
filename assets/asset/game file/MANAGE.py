@@ -14,7 +14,7 @@ class SpriteSheet():
         # Cut each frame from the sprite sheet
         for position in positions:
             sprite = image.subsurface(pygame.Rect(position))# Extract frame
-            sprite= pygame.transform.scale(sprite,(20,20)) # scale it up/ bigger
+            sprite= pygame.transform.scale(sprite,(32,32)) # scale it up/ bigger
             self.sprites.append(sprite)
             # Create flipped version
             flipped = pygame.transform.flip(sprite,True,False)
