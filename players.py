@@ -77,22 +77,52 @@ class Player():
             self.vy = - JUMP_FORCE
             self.on_ground = False
             self.currentstate= 'JUMP'
-
     def apply_gravity(self):
-        self.vy += self.gravity
-        self.y += self.vy
+        self.vy += 1
+        if self.vy > 20:  
+            self.vy = 20
+        
 
-        # Floor collision 
-        if self.y >= 600:
-            self.y = 600
-            self.vy = 0
-            self.on_ground = True
+    def vertical_collision(self, tiles):
+        self.rect.y += self.vy
+
+        for tile in tiles:
+            if self.rect.colliderect(tile.rect):
+
+                # landing
+                if self.vy > 0:
+                    self.rect.bottom = tile.rect.top
+                    self.vy = 0
+                    self.on_ground = True
+                    return
+
+                # hitting ceiling
+                elif self.vy < 0:
+                    self.rect.top = tile.rect.bottom
+                    self.vy = 0
+
+        self.on_ground = False
+    def move_horizontal(self, tiles):
+        self.rect.x += self.vx
+
+        for tile in tiles:
+            if self.rect.colliderect(tile.rect):
+
+                # Moving right
+                if self.vx > 0:
+                    self.rect.right = tile.rect.left
+
+                # Moving left
+                elif self.vx < 0:
+                    self.rect.left = tile.rect.right
 
 
-
-    def update(self):
+    def update(self,tiles):
         self.apply_gravity()
         self.input_handle()
+        self.move_horizontal(tiles)
+        self.vertical_collision(tiles)
+
 
         self.selectanimation()
         #position after move
@@ -101,7 +131,8 @@ class Player():
         # update frame
         frame_index = int(self.animation) % len(self.currentanimation)
         self.image = self.currentanimation[frame_index]
-        self.rect.topleft = (self.x, self.y)
+        self.x = self.rect.x
+        self.y = self.rect.y
 
         # increase animation timer
         self.animation += self.speed
@@ -112,6 +143,17 @@ class Player():
 
     # CHOSE ANIMATION
     def selectanimation(self):
+        if not self.on_ground:
+            # Jumping or falling
+            if self.vy < 0:
+                self.currentstate = "JUMP"
+            else:
+                self.currentstate = "FALL"
+        else:
+            if self.vx == 0:
+                self.currentstate = "IDLE"
+
+
         # select correct speed
         if self.currentstate == "IDLE":
             self.speed = PLAYERIDLE_SPEED

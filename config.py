@@ -2,8 +2,8 @@
 SPRITESHEET_PATH = 'assets/asset/game file/'
 
 #this is where the background shape
-WIDTH = 1280
-HEIGHT = 720
+WIDTH = 700
+HEIGHT = 400
 
 
 # frames

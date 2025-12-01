@@ -23,7 +23,7 @@ running = True
 # make the background
 background = Background()
 level = Level(screen)
-player = Player((200,200),True)  
+player = Player((20,20),True)  
 
 # starting position
 
@@ -40,8 +40,6 @@ while running:
             running = False
   
 
-
-    
     
     
     background.draw(screen)
@@ -49,7 +47,9 @@ while running:
     player.draw(screen)
  
 
-    player.update()
+    player.update(level.platformtiles)
+   
+    
 
     
     # flip() the display to put your work on screen
