@@ -7,35 +7,62 @@ from main_menu import StartScreen
 from score import Score
 from enemies import Enemy
 from game_over import GameOver
+from play_music import Music
 
-# MAIN MENU
+# pygame setup
+pygame.init()
+#dimension(set up as your screen )
+screen = pygame.display.set_mode((WIDTH,HEIGHT))
+# set caption
+pygame.display.set_caption('Platformer')
+#clock is for frame rate(slow and fast of the game)
+clock = pygame.time.Clock()
+# flag to make it run the whole time
+running = True
+# Music here
+play = Music()        # Load music system
+play.play_start()  
 
-def run_game(screen):
-    clock = pygame.time.Clock()
-    # make the background
+
+# make the background
+while True:  # Main program loop
+    # 1. Start screen
+    start_screen = StartScreen(screen)
+    start_screen.run()
+   
+    
+    # 2. Initialize game objects
     bg = Background(image_path='abc.jpg', width=WIDTH, height=HEIGHT, floor_y=FLOOR_Y, floor_color=(0,0,0))
-    score =Score()
-    # GAME OBJECT
+    score = Score()
     player = Player(100, FLOOR_Y - 50)
     enemies = pygame.sprite.Group()
     for i in range(5):
-        enemies.add(Enemy(x=WIDTH + i*150))
+        enemies.add(Enemy(x=WIDTH + i*300))
     enemies.add(Enemy(speed=3, x=WIDTH + 800))
-    # GameOver object
-
+    
+    # 3. Game loop
     running = True
     while running:
-        # poll for events
-        # pygame.QUIT event means the user clicked X to close your window
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
-    
-            if pygame.sprite.spritecollide(player, enemies, False):
+                pygame.quit()
+                sys.exit()
+
+        player.update()
+        enemies.update()
+        score.update()
+        
+        # Collision check
+        for enemy in enemies:
+            if player.rect.colliderect(enemy.rect):
+                play.play_lose()   # Play lose sound
+                play.stop_music() #stop it
+                # start it back
+                play.play_start()
+                # Show Game Over screen
                 GameOver(screen).run(int(score.points))
-                return 
-            
-            
+                running = False
+                break
 
         # Draw
         bg.draw(screen)
@@ -43,16 +70,5 @@ def run_game(screen):
         enemies.draw(screen)
         score.draw(screen)
 
-        # Update
-        score.update()
-        player.update()
-        enemies.update()
-
-
-        # flip() the display to put your work on screen
         pygame.display.flip()
-
-        clock.tick(60)  # limits FPS to 60
-
-    pygame.quit()
-    sys.exit()
+        clock.tick(60)
