@@ -5,8 +5,8 @@
 [Docsify Documentation Page]([(https://github.com/ancientpy21/game/tree/main/assets/asset/game%20file])
 
 ### Title Screen
-![screenshot](assets/asset/game file/ss/platformer.png)
-![screenshot](assets/asset/game file/Screenshot 2025-12-01 063211.png)
+![screenshot]([ss/platformer.png])
+![screenshot]([Screenshot 2025-12-01 063211.png])
 
 
 
